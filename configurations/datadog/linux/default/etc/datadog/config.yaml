@@ -1,0 +1,54 @@
+## datadog.yaml
+
+## API Key
+## Set your Datadog API key here. This is required to send metrics, logs, and other data.
+# api_key: YOUR_DATADOG_API_KEY
+
+## Site
+## Set the Datadog site to send data to (default is datadoghq.com).
+## For example, if using Datadog EU site, use "datadoghq.eu".
+# site: datadoghq.com
+
+## Logs (Optional)
+## If you want to enable log collection.
+logs_enabled: false
+
+## Metrics Collection (System Metrics)
+## Enable or disable system check collection (CPU, memory, disk, etc.)
+collect_system_metrics: true
+
+## Statsd Server
+## Set up the DogStatsD server address if you need to send metrics to a specific host.
+statsd_host: YOUR_CUSTOM_ENDPOINT
+
+## Configurations for system checks
+## The frequency at which the system metrics are collected.
+# The default value is 15 seconds.
+interval: 15
+
+## Enable specific system checks:
+## Uncomment these lines to customize the configuration of system metrics.
+
+# enable_process_checks: true
+# enable_cpu_checks: true
+# enable_disk_checks: true
+# enable_memory_checks: true
+# enable_network_checks: true
+
+## Additional network configuration (if sending to a custom endpoint):
+## Replace the following with your actual settings if sending to a different endpoint.
+proxy:
+  http: http://localhost:8080
+  https: http://localhost:8080
+  no_proxy:
+    - localhost
+    - 127.0.0.1
+
+## Optional tags to add to the data
+tags:
+  - "environment:production"
+  - "role:system-metrics"
+
+## DogStatsD non-local traffic
+## Set to true if you need DogStatsD to receive metrics from external hosts.
+non_local_traffic: true
