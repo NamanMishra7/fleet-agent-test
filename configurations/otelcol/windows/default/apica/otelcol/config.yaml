@@ -1,0 +1,550 @@
+receivers:
+  windowseventlog/application:
+    channel: application
+  windowseventlog/system:
+    channel: system
+  otlp:
+    protocols:
+      grpc:
+      http:
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: 'prom-metrics-collector'
+          scrape_interval: 60s
+          static_configs:
+            - targets: ['0.0.0.0:9464']
+  hostmetrics:
+    collection_interval: 60s
+    scrapers:
+      cpu:
+        metrics:
+          system.cpu.utilization:
+            enabled: true
+      memory:
+        metrics:
+          system.memory.usage:
+            enabled: true
+          system.memory.limit:
+            enabled: true
+          system.memory.utilization:
+            enabled: true
+      disk:
+      network:
+      load:
+        metrics:
+          system.cpu.load_average.1m:
+            enabled: true
+      filesystem:
+        metrics:
+        # currently commented out as it gathers no metrics on windows
+        # system.filesystem.inodes.usage:
+          # enabled: true
+          system.filesystem.utilization:
+            enabled: true
+      paging:
+      # currently commented out as it gathers no metrics on windows
+      # metrics:
+        # system.paging.faults:
+          # enabled: true
+      processes:
+
+  windowsperfcounters:
+    metrics:
+      system.up.time:
+        gauge:
+      system.processor.queue.length:
+        gauge:
+      system.context.switches.sec:
+        gauge:
+      system.system.calls.sec:
+        gauge:
+      system.file.control.operations.sec:
+        gauge:
+      system.file.data.operations.sec:
+        gauge:
+      system.registry.quota.in.use:
+        unit: "%"
+        gauge:
+      objects.processes:
+        gauge:
+      objects.threads:
+        gauge:
+      processor.utility:
+        unit: "%"
+        gauge:
+      processor.time:
+        gauge:
+      processor.idle.time:
+        gauge:
+      processor.user.time:
+        gauge:
+      processor.privileged.time:
+        gauge:
+      processor.interrupt.time:
+        gauge:
+      processor.dpc.time:
+        gauge:
+      memory.available.bytes:
+        gauge:
+      memory.committed.bytes:
+        gauge:
+      memory.cache.faults.sec:
+        gauge:
+      memory.demand.zero.faults.sec:
+        gauge:
+      memory.pages.sec:
+        gauge:
+      memory.page.faults.sec:
+        gauge:
+      memory.transition.faults.sec:
+        gauge:
+      memory.pool.paged.bytes:
+        gauge:
+      memory.pool.nonpaged.bytes:
+        gauge:
+      memory.standby.cache.core.bytes:
+        gauge:
+      memory.standby.cache.normal.priority.bytes:
+        gauge:
+      memory.standby.cache.reserve.bytes:
+        gauge:
+      memory.paging.file.usage:
+        unit: "%"
+        gauge:
+      memory.paging.file.usage.peak:
+        unit: "%"
+        gauge:
+      logicaldisk.free.megabytes:
+        gauge:
+      logicaldisk.percent.free.space:
+        unit: "%"
+        gauge:
+      logicaldisk.current.disk.queue.length:
+        gauge:
+      logicaldisk.percent.disk.time:
+        unit: "%"
+        gauge:
+      logicaldisk.percent.idle.time:
+        unit: "%"
+        gauge:
+      logicaldisk.percent.disk.read.time:
+        unit: "%"
+        gauge:
+      logicaldisk.percent.disk.write.time:
+        unit: "%"
+        gauge:
+      logicaldisk.disk.transfers.sec:
+        gauge:
+      logicaldisk.disk.reads.sec:
+        gauge:
+      logicaldisk.disk.writes.sec:
+        gauge:
+      logicaldisk.disk.bytes.sec:
+        gauge:
+      logicaldisk.disk.read.bytes.sec:
+        gauge:
+      logicaldisk.disk.write.bytes.sec:
+        gauge:
+      physicaldisk.current.disk.queue.length:
+        gauge:
+      physicaldisk.percent.disk.time:
+        unit: "%"
+        gauge:
+      physicaldisk.percent.idle.time:
+        unit: "%"
+        gauge:
+      physicaldisk.percent.disk.read.time:
+        unit: "%"
+        gauge:
+      physicaldisk.percent.disk.write.time:
+        unit: "%"
+        gauge:
+      physicaldisk.disk.transfers.sec:
+        gauge:
+      physicaldisk.disk.reads.sec:
+        gauge:
+      physicaldisk.disk.writes.sec:
+        gauge:
+      physicaldisk.disk.bytes.sec:
+        gauge:
+      physicaldisk.disk.read.bytes.sec:
+        gauge:
+      physicaldisk.disk.write.bytes.sec:
+        gauge:
+      network.interface.bytes.total.sec:
+        gauge:
+      network.interface.packets.sec:
+        gauge:
+      network.interface.packets.received.sec:
+        gauge:
+      network.interface.packets.sent.sec:
+        gauge:
+      network.interface.current.bandwidth:
+        gauge:
+      network.interface.bytes.received.sec:
+        gauge:
+      network.interface.packets.received.unicast.sec:
+        gauge:
+      network.interface.packets.received.non-unicast.sec:
+        gauge:
+      network.interface.packets.received.discarded:
+        gauge:
+      network.interface.packets.received.errors:
+        gauge:
+      network.interface.packets.received.unknown:
+        gauge:
+      network.interface.bytes.sent.sec:
+        gauge:
+      network.interface.packets.sent.unicast.sec:
+        gauge:
+      network.interface.packets.sent.non-unicast.sec:
+        gauge:
+      network.interface.packets.outbound.discarded:
+        gauge:
+      network.interface.packets.outbound.errors:
+        gauge:
+      network.interface.output.queue.length:
+        gauge:
+      network.interface.offloaded.connections:
+        gauge:
+      virtual.bytes.peak:
+        unit: Bytes
+        gauge:
+      virtual.bytes:
+        unit: Bytes
+        gauge:
+      page.faults.sec:
+        unit: faults
+        gauge:
+      page.file.bytes.peak:
+        unit: Bytes
+        gauge:
+      page.file.bytes:
+        unit: Bytes
+        gauge:
+      private.bytes:
+        unit: Bytes
+        gauge:
+      thread.count:
+        unit: Count
+        gauge:
+      elapsed.time:
+        gauge:
+      pool.paged.bytes:
+        unit: Bytes
+        gauge:
+      pool.nonpaged.bytes:
+        unit: Bytes
+        gauge:
+      handle.count:
+        unit: Count
+        gauge:
+      io.read.operations.sec:
+        unit: Seconds
+        gauge:
+      io.write.operations.sec:
+        unit: Seconds
+        gauge:
+      io.data.operations.sec:
+        unit: Seconds
+        gauge:
+      io.other.operations.sec:
+        unit: Seconds
+        gauge:
+      io.read.bytes.sec:
+        unit: Bytes
+        gauge:
+      io.write.bytes.sec:
+        unit: Bytes
+        gauge:
+      io.data.bytes.sec:
+        unit: Bytes
+        gauge:
+      io.other.bytes.sec:
+        unit: Bytes
+        gauge:
+
+    perfcounters:
+      - object: System
+        instances: "*"
+        counters:
+          - name: "System Up Time"
+            metric: system.up.time
+          - name: "Processor Queue Length"
+            metric: system.processor.queue.length
+          - name: "Context Switches/sec"
+            metric: system.context.switches.sec
+          - name: "System Calls/sec"
+            metric: system.system.calls.sec
+          - name: "File Control Operations/sec"
+            metric: system.file.control.operations.sec
+          - name: "File Data Operations/sec"
+            metric: system.file.data.operations.sec
+          - name: "% Registry Quota In Use"
+            metric: system.registry.quota.in.use
+      - object: Objects
+        instances: "*"
+        counters:
+          - name: "Processes"
+            metric: objects.processes
+          - name: "Threads"
+            metric: objects.threads
+      - object: "Processor Information"
+        instances: "*"
+        counters:
+          # - name: "% Processor Utility"
+          #   metric: processor.utility
+          - name: "% Processor Time"
+            metric: processor.time
+          - name: "% Idle Time"
+            metric: processor.idle.time
+          - name: "% User Time"
+            metric: processor.user.time
+          - name: "% Privileged Time"
+            metric: processor.privileged.time
+          - name: "% Interrupt Time"
+            metric: processor.interrupt.time
+          - name: "% DPC Time"
+            metric: processor.dpc.time
+      - object: Memory
+        instances: "*"
+        counters:
+          - name: "Available Bytes"
+            metric: memory.available.bytes
+          - name: "Committed Bytes"
+            metric: memory.committed.bytes
+          - name: "Cache Faults/sec"
+            metric: memory.cache.faults.sec
+          - name: "Demand Zero Faults/sec"
+            metric: memory.demand.zero.faults.sec
+          - name: "Pages/sec"
+            metric: memory.pages.sec
+          - name: "Page Faults/sec"
+            metric: memory.page.faults.sec
+          - name: "Transition Faults/sec"
+            metric: memory.transition.faults.sec
+          - name: "Pool Paged Bytes"
+            metric: memory.pool.paged.bytes
+          - name: "Pool Nonpaged Bytes"
+            metric: memory.pool.nonpaged.bytes
+          - name: "Standby Cache Core Bytes"
+            metric: memory.standby.cache.core.bytes
+          - name: "Standby Cache Normal Priority Bytes"
+            metric: memory.standby.cache.normal.priority.bytes
+          - name: "Standby Cache Reserve Bytes"
+            metric: memory.standby.cache.reserve.bytes
+          # - name: "% Usage"
+          #   metric: memory.paging.file.usage
+          # - name: "% Usage Peak"
+          #   metric: memory.paging.file.usage.peak
+      - object: "LogicalDisk"
+        instances: "*"
+        counters:
+          - name: "Free Megabytes"
+            metric: logicaldisk.free.megabytes
+          - name: "% Free Space"
+            metric: logicaldisk.percent.free.space
+          - name: "Current Disk Queue Length"
+            metric: logicaldisk.current.disk.queue.length
+          - name: "% Disk Time"
+            metric: logicaldisk.percent.disk.time
+          - name: "% Idle Time"
+            metric: logicaldisk.percent.idle.time
+          - name: "% Disk Read Time"
+            metric: logicaldisk.percent.disk.read.time
+          - name: "% Disk Write Time"
+            metric: logicaldisk.percent.disk.write.time
+          - name: "Disk Transfers/sec"
+            metric: logicaldisk.disk.transfers.sec
+          - name: "Disk Reads/sec"
+            metric: logicaldisk.disk.reads.sec
+          - name: "Disk Writes/sec"
+            metric: logicaldisk.disk.writes.sec
+          - name: "Disk Bytes/sec"
+            metric: logicaldisk.disk.bytes.sec
+          - name: "Disk Read Bytes/sec"
+            metric: logicaldisk.disk.read.bytes.sec
+          - name: "Disk Write Bytes/sec"
+            metric: logicaldisk.disk.write.bytes.sec
+      - object: "PhysicalDisk"
+        instances: "*"
+        counters:
+          - name: "Current Disk Queue Length"
+            metric: physicaldisk.current.disk.queue.length
+          - name: "% Disk Time"
+            metric: physicaldisk.percent.disk.time
+          - name: "% Idle Time"
+            metric: physicaldisk.percent.idle.time
+          - name: "% Disk Read Time"
+            metric: physicaldisk.percent.disk.read.time
+          - name: "% Disk Write Time"
+            metric: physicaldisk.percent.disk.write.time
+          - name: "Disk Transfers/sec"
+            metric: physicaldisk.disk.transfers.sec
+          - name: "Disk Reads/sec"
+            metric: physicaldisk.disk.reads.sec
+          - name: "Disk Writes/sec"
+            metric: physicaldisk.disk.writes.sec
+          - name: "Disk Bytes/sec"
+            metric: physicaldisk.disk.bytes.sec
+          - name: "Disk Read Bytes/sec"
+            metric: physicaldisk.disk.read.bytes.sec
+          - name: "Disk Write Bytes/sec"
+            metric: physicaldisk.disk.write.bytes.sec
+      - object: "Network Interface"
+        instances: "*"
+        counters:
+          - name: "Bytes Total/sec"
+            metric: network.interface.bytes.total.sec
+          - name: "Packets/sec"
+            metric: network.interface.packets.sec
+          - name: "Packets Received/sec"
+            metric: network.interface.packets.received.sec
+          - name: "Packets Sent/sec"
+            metric: network.interface.packets.sent.sec
+          - name: "Current Bandwidth"
+            metric: network.interface.current.bandwidth
+          - name: "Bytes Received/sec"
+            metric: network.interface.bytes.received.sec
+          - name: "Packets Received Unicast/sec"
+            metric: network.interface.packets.received.unicast.sec
+          - name: "Packets Received Non-Unicast/sec"
+            metric: network.interface.packets.received.non-unicast.sec
+          - name: "Packets Received Discarded"
+            metric: network.interface.packets.received.discarded
+          - name: "Packets Received Errors"
+            metric: network.interface.packets.received.errors
+          - name: "Packets Received Unknown"
+            metric: network.interface.packets.received.unknown
+          - name: "Bytes Sent/sec"
+            metric: network.interface.bytes.sent.sec
+          - name: "Packets Sent Unicast/sec"
+            metric: network.interface.packets.sent.unicast.sec
+          - name: "Packets Sent Non-Unicast/sec"
+            metric: network.interface.packets.sent.non-unicast.sec
+          - name: "Packets Outbound Discarded"
+            metric: network.interface.packets.outbound.discarded
+          - name: "Packets Outbound Errors"
+            metric: network.interface.packets.outbound.errors
+          - name: "Output Queue Length"
+            metric: network.interface.output.queue.length
+          - name: "Offloaded Connections"
+            metric: network.interface.offloaded.connections
+      - object: Process
+        instances: "atom"
+        counters:
+#          - name: "% Processor Time"
+#            metric: processor.time
+#          - name: "% User Time"
+#            metric: processor.user.time
+#          - name: "% Privileged Time"
+#            metric: processor.privileged.time
+          - name: "Virtual Bytes Peak"
+            metric: virtual.bytes.peak
+          - name: "Virtual Bytes"
+            metric: virtual.bytes
+          - name: "Page Faults/sec"
+            metric: page.faults.sec
+          - name: "Page File Bytes Peak"
+            metric: page.file.bytes.peak
+          - name: "Page File Bytes"
+            metric: page.file.bytes
+          - name: "Private Bytes"
+            metric: private.bytes
+          - name: "Thread Count"
+            metric: thread.count
+          - name: "Elapsed Time"
+            metric: elapsed.time
+          - name: "Pool Paged Bytes"
+            metric: pool.paged.bytes
+          - name: "Pool Nonpaged Bytes"
+            metric: pool.nonpaged.bytes
+          - name: "Handle Count"
+            metric: handle.count
+          - name: "IO Read Operations/sec"
+            metric: io.read.operations.sec
+          - name: "IO Write Operations/sec"
+            metric: io.write.operations.sec
+          - name: "IO Data Operations/sec"
+            metric: io.data.operations.sec
+          - name: "IO Other Operations/sec"
+            metric: io.other.operations.sec
+          - name: "IO Read Bytes/sec"
+            metric: io.read.bytes.sec
+          - name: "IO Write Bytes/sec"
+            metric: io.write.bytes.sec
+          - name: "IO Data Bytes/sec"
+            metric: io.data.bytes.sec
+          - name: "IO Other Bytes/sec"
+            metric: io.other.bytes.sec
+
+processors:
+  resource/os:
+    attributes:
+      - key: ostype
+        value: "windows"
+        action: upsert
+  resource/boomi:
+    attributes:
+      - key: host.name
+        value: "{{$ .Agent.host_name }}"
+        action: upsert
+  resource/apicalogs:
+    attributes:
+      - key: namespace
+        action: insert
+        value: "otlplogs"
+      - key: application
+        action: insert
+        value: "windowsLogs"
+
+exporters:
+  debug:
+    verbosity: detailed
+  prometheus:
+    endpoint: 0.0.0.0:9464
+  apica/logs:
+    endpoint: "https://hrt.apica.io/v1/json_batch"
+    tls:
+      insecure: false
+      insecure_skip_verify: true
+    headers:
+      Authorization: "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOltdLCJhdWQiOiJsb2dpcS1jbGllbnRzIiwianRpIjoiZDhmMWM4YzctMDg0Mi00ODFkLTllMTYtZWZhMTkyMDg0OWFiIiwiaWF0IjoxNzI0MzQxMDA2LCJpc3MiOiJsb2dpcS1jb2ZmZWUtc2VydmVyIiwibmJmIjoxNzI0MzQxMDA2LCJzdWIiOiJkZXZvcHNAYXBpY2EuaW8iLCJVaWQiOjEsInJvbGUiOiJhZG1pbiJ9.Qbx2D3ZdS7uYZvZDql8sSLUIRFMY-MfUxkri88SlpeEOPrPCaAZg7piQLCO_2sUeR28319BqMU2d72qLWnU3DmEqDQ_4avOyW_2W8mayRQvOcq735ZYcWo9quQfQyQwmZdAAHCJWW6New86u2ywXJQ9dCYtbBEovBd4jh0acs0iqfASFgyUwCLKJ7F3yXTExPx_A0fe8u6dAPJXEVZ6z1j5cqAwdJ1rBcrwr7n1cnQqoM8e2b60f3jM9aWHzpgNJfneZ5gdrnIjMI5gG8o6chaRMCbUYDqxKBn4XZauMELUbequ-uOQuDiCqUzv6I-fRBcIMqD_bql2jtgtUM7R_1Q"
+    sending_queue:
+      enabled: true
+      queue_size: 1_000_000
+    retry_on_failure:
+      enabled: true
+
+  prometheusremotewrite/apicametrics:
+    endpoint: "{{$ .Agent.secret.apicametrics.endpoint }}"
+    tls:
+      insecure: false
+      insecure_skip_verify: true
+    external_labels:
+      hostname: "{{$ .Agent.host_name }}"
+      ostype: "windows"
+    resource_to_telemetry_conversion:
+      enabled: true # Convert resource attributes to metric labels
+
+extensions:
+
+service:
+  extensions:
+  pipelines:
+    metrics:
+      receivers: [otlp, hostmetrics]
+      processors: [resource/os, resource/boomi]
+      exporters: [prometheus]
+    metrics/winperf:
+      receivers: [windowsperfcounters]
+      exporters: [prometheus]
+    metrics/out:
+      receivers: [prometheus]
+      processors: [resource/os, resource/boomi]
+      exporters: [prometheusremotewrite/apicametrics]
+    logs/out:
+      receivers: [windowseventlog/application,windowseventlog/system]
+      processors: [resource/os,resource/apicalogs]
+      exporters: [apica/logs]
