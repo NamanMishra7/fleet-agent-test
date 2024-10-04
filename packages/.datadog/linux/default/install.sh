@@ -1,5 +1,44 @@
 #!/bin/sh
 
+# Default values for variables
+API_KEY=""
+STRING_VALUE=""
+
+# Function to display usage
+usage() {
+  echo "Usage: $0 --api-key <api_key> --dd-site <datadog_site>"
+  echo "Or: $0 --api-key=<api_key> --dd-site=<datadog_site>"
+  exit 1
+}
+
+# Parse arguments
+while [[ "$1" != "" ]]; do
+    case $1 in
+        --api-key=* )        API_KEY="${1#*=}"  # Extract value after "="
+                             ;;
+        --api-key )          shift
+                             API_KEY=$1
+                             ;;
+        --dd-site=* )         DD_SITE="${1#*=}"
+                             ;;
+        --dd-site )           shift
+                             DD_SITE=$1
+                             ;;
+        -h | --help )        usage
+                             exit
+                             ;;
+        * )                  usage
+                             exit 1
+    esac
+    shift
+done
+
+# Check if required parameters are passed
+if [ -z "$API_KEY" ] || [ -z "$DD_SITE" ]; then
+    echo "Error: Missing required parameters."
+    usage
+fi
+
 DIR=$PWD
 
 mkdir -p /opt/datadog-agent/install/
@@ -9,10 +48,10 @@ cd /opt/datadog-agent/install/
 wget -O install_script https://install.datadoghq.com/scripts/install_script_agent7.sh
 
 if $DIR/checkmd5 --hash=774cea02de61b37aaffc70d39004a13804fe7b27899c25f07518c0320cdf761cf645c75c84cfa74f5686ff91af4cf38661f7e506c42226645163e509da2d4736 --file=install_script; then
-    # dummy API Key
-    DD_API_KEY=f8023136f0b65fd87f2ba698f5f7c73f \
-    DD_SITE="datadoghq.com" \
+    DD_API_KEY="$API_KEY" \
+    DD_SITE="$DD_SITE" \
     bash -c "$(cat install_script)";
+    rm -rf install_script
 else
     echo "Downloaded package files do not match checksum";
     exit 1;
