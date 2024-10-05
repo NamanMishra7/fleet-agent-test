@@ -1,0 +1,8 @@
+
+#########################
+## Basic Configuration ##
+#########################
+
+api_key: "{{$ .Agent.secret.api_key }}"
+
+site: "{{$ .Agent.secret.dd_site }}"
