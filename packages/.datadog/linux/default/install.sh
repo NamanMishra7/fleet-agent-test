@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 # Default values for variables
 API_KEY=""
-STRING_VALUE=""
+DD_SITE=""
 
 # Function to display usage
 usage() {
